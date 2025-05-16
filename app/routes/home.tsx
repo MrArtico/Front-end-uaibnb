@@ -1,14 +1,12 @@
-import type { Route } from "./routes/home.tsx";
-import React from "react";
-import { Welcome } from "../welcome/welcome";
-
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
-}
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 export default function Home() {
-  return <Welcome />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route />
+      </Routes>
+    </BrowserRouter>
+  );
 }
