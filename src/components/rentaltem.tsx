@@ -14,84 +14,77 @@ export function RentalItem({ rental }: { rental: Rental }) {
     >
       <RentalCity>{cidade}</RentalCity>
       <Image width={300} src={imagem} alt={titulo} />
-      <RentalDetails>
-        <RentalTitle title={titulo}>{titulo}</RentalTitle>
-
-        <RentalFooter>
-          <RentalPrice>
-            {Intl.NumberFormat("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            }).format(preco)}
-          </RentalPrice>
-
-          <RentalOptions onClick={() => navigate(`/rental/edit/${rental.id}`)}>
-            <GoGear size={20} />
-          </RentalOptions>
-        </RentalFooter>
-      </RentalDetails>
+      <RentalTitle title={titulo}>{titulo}</RentalTitle>
+      <RentalUtils>
+        <RentalPrice>
+          {Intl.NumberFormat("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+          }).format(preco)}
+        </RentalPrice>
+        <RentalOptions
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/rental/edit/${rental.id}`);
+          }}
+        >
+          <GoGear size={20} />
+        </RentalOptions>
+      </RentalUtils>
     </RentalContainer>
   );
 }
 
 const RentalPrice = styled.div`
   font-size: 0.9rem;
-  color: #7fff00;
-  background-color: rgba(0, 0, 0, 0.65);
-  padding: 0.3rem 0.6rem;
+  font-weight: 500;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 0.4rem 0.8rem;
   border-radius: 10px;
+`;
+
+const RentalUtils = styled.div`
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  z-index: 2;
+  gap: 5px;
 `;
 
 const RentalOptions = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: fit-content;
-  height: fit-content;
-  background-color: var(--card-content-color);
-  color: #fff;
+  background-color: rgba(255, 255, 255, 0.2); 
   padding: 0.3rem;
-  border-radius: var(--card-border-radius);
-  transition: all 0.2s ease-in-out;
+  border-radius: 8px;
+  color: #fff;
+  transition: all 0.2s;
+
   &:hover {
     background-color: #fff;
-    color: var(--card-content-color);
+    color: #000;
   }
 `;
 
-const RentalFooter = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const RentalDetails = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  padding: 1rem;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  backdrop-filter: blur(3px);
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 1;
-`;
-
 const RentalContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: var(--card-width);
-  height: var(--card-height);
-  border-radius: var(--card-border-radius);
-  background-color: var(--card-background);
-  box-shadow: var(--card-box-shadow);
   position: relative;
+  width: var(--card-width); // Qq coisa muda o tamanho dos cards no css
+  height: var(--card-height); 
+  border-radius: 30px;
   overflow: hidden;
-  justify-content: center;
-  align-items: center;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  background-color: #000;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent 90%);
+    z-index: 1;
+  }
 `;
 
 const Image = styled.img`
@@ -101,29 +94,37 @@ const Image = styled.img`
   display: block;
   object-position: 65%;
   border-radius: var(--card-border-radius);
+  transition: transform 0.3s ease;
+  ${RentalContainer}:hover & {
+    transform: scale(1.05);
+  }
 `;
 
 const RentalTitle = styled.p`
   font-size: 1rem;
-  font-weight: bold;
+  position: absolute;
+  bottom: 3rem;
+  left: 12px;
+  right: 12px;
+  font-size: 1.3rem;
+  font-weight: 500;
   color: #fff;
   margin: 0;
-  margin-bottom: 0.3rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  z-index: 2;
 `;
 
 const RentalCity = styled.p`
-  font-size: 1rem;
   position: absolute;
-  border-radius: var(--card-border-radius);
-  background-color: var(--card-content-color);
-  color: white;
+  top: 0.4rem;
+  left: 0.7rem;
+  padding: 0.3rem 0.8rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
   font-weight: bold;
-  text-align: left;
-  padding: 0.3rem 0.5rem;
-  margin: 0;
-  top: 10px;
-  left: 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  z-index: 2;
 `;
