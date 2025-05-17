@@ -1,16 +1,16 @@
 import axios from "axios";
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 
-dotenv.config();
+// dotenv.config();
 
-const baseURL = process.env.BASE_URL;
-const token = process.env.TOKEN;
+const baseURL = import.meta.env.VITE_BASE_URL;
+const token = import.meta.env.VITE_TOKEN;
 
-const axiosConfig = axios.create({
+const api = axios.create({
 	baseURL,
 	headers: {
 		Authorization: `Bearer ${token}`
 	}
 });
 
-export default axiosConfig;
+export default api;

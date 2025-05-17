@@ -1,14 +1,14 @@
 // import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Rental from './pages/rental'
-import Features from './pages/features'
+import Characteristics from './pages/characteristics'
 
 function App() {
 	return (
 		<Router>
 			<Routes>
 				<Route path="/" element={<Rental />} />
-				<Route path="/caracteristicas/:id" element={<Features />} />
+				<Route path="/caracteristicas/:id" element={<Characteristics />} />
 			</Routes>
 		</Router>
 	)
