@@ -7,9 +7,10 @@ export async function getCharacteristicsByFormula(ids: string[]) {
 	return response.data;
 }
 
-export async function getCharacteristicsById(id: string) {
-	const response = await api.get(`/caracteristicas/${id}`);
-	return response.data;
+export async function getCharacteristicsById(id: string): Promise<Pick<CharacteristicsItem["fields"], "nome" | "descricao"> | undefined> {
+	const response = await api.get<CharacteristicsItem>(`/caracteristicas/${id}`);
+	const { fields } = response.data;
+	return fields;
 }
 
 export async function getAllCharacteristics() {
@@ -20,5 +21,14 @@ export async function getAllCharacteristics() {
 export async function createCharacteristics(characteristic: Pick<CharacteristicsItem["fields"], "nome" | "descricao">) {
 	const data = { "records": [{ "fields": characteristic }] };
 	const response = await api.post("/caracteristicas", data);
+	return response.data;
+}
+
+export async function updateCharacteristics(id: string, characteristic: Pick<CharacteristicsItem["fields"], "nome" | "descricao">) {
+	const data = { "records": [{ "id": id, "fields": {
+		"nome": characteristic.nome,
+		"descricao": characteristic.descricao
+	} }] };
+	const response = await api.patch("/caracteristicas", data);
 	return response.data;
 }

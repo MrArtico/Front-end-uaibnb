@@ -1,7 +1,4 @@
 import axios from "axios";
-// import dotenv from "dotenv";
-
-// dotenv.config();
 
 const baseURL = import.meta.env.VITE_BASE_URL;
 const token = import.meta.env.VITE_TOKEN;

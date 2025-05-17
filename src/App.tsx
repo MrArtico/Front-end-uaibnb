@@ -1,13 +1,15 @@
-// import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import Rental from './pages/RentalPage'
-import CreateRental from './pages/CreateRental'
 
 import './App.css'
+
 import FormEdit from './components/FormEdit'
-import RentalDetails from './pages/RentalDetailsPage'
 import CharacteristicForm from './components/characteristicForm'
+import Rental from './pages/RentalPage'
+import SwitchOptions from './components/switchOptions'
+
+import RentalDetails from './pages/RentalDetailsPage'
 import Characteristics from './pages/CharacteristicsPage'
+import CharacteristicEdit from './components/characteristicEdit'
 
 function App() {
 	return (
@@ -16,14 +18,13 @@ function App() {
 				<Route path="/" element={<Rental />} /> // PAGINA INDIVIDUAL
 				<Route path="/rental/:id" element={<RentalDetails/>} /> // PAGINA INDIVIDUAL
 				<Route path="/characteristics" element={<Characteristics/>} /> // PAGINA INDIVIDUAL
-				<Route path="/characteristics/:id" element={<p>Mostra detalhes sobre a caracteristica</p>} /> // PAGINA INDIVIDUAL
 
-				<Route path="/rental/add" element={<CreateRental />} />
+				<Route path="/features" element={<SwitchOptions />} />
 				<Route path="/rental/edit/:id" element={<FormEdit />} />
 				<Route path="/rental/edit" element={<Navigate to="/" replace />} />
 				<Route path="/characteristics/add" element={<CharacteristicForm />} /> 
-				{/* <Route path="/characteristics/:id" element={<Characteristics />} /> */}
-			</Routes>
+				<Route path="/characteristics/edit/:id" element={<CharacteristicEdit />} />
+				</Routes>
 		</Router>
 	)
 }

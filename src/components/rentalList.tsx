@@ -26,7 +26,7 @@ export default function RentalList() {
 		if (rentals.length === 0) return;
 
 		try {
-			const newRental = rentals.map((rental: Rental) => <RentalItem key={rental.id} rental={rental} />);
+			const newRental = rentals.map((rental: Rental) => (<RentalItem key={rental.id} rental={rental} />));
 			setRentalItems(newRental);
 		} catch (error) {
 			console.error('Erro ao formatar a lista de alugueis:', error);
