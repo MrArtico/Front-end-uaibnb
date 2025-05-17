@@ -1,24 +1,17 @@
 // import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Rental from './pages/rental'
+import Features from './pages/features'
 
 function App() {
 	return (
 		<Router>
 			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="/about" element={<About />} />
-				{/* Add more routes as needed */}
+				<Route path="/" element={<Rental />} />
+				<Route path="/caracteristicas/:id" element={<Features />} />
 			</Routes>
 		</Router>
 	)
-}
-
-function Home() {
-	return <h2>Home Page</h2>
-}
-
-function About() {
-	return <h2>About Page</h2>
 }
 
 export default App
