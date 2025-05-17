@@ -2,6 +2,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Rental from './pages/rental'
 import Characteristics from './pages/characteristics'
+import './App.css'
 
 function App() {
 	return (

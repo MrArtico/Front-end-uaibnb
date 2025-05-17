@@ -2,6 +2,7 @@ import React, { useEffect, useState, type JSX } from 'react';
 import { getAllRentals } from '../services/rentalService';
 import { RentalItem } from './rentaltem';
 import type { Rental } from '../types/rental';
+import styled from 'styled-components';
 
 export default function RentalList() {
 	const [rentals, setRentals] = useState<Rental[]>([]);
@@ -37,8 +38,16 @@ export default function RentalList() {
 	if (rentals.length === 0) return <p>Loading...</p>;
 
 	return (
-		<>{rentalItems}</>
+		<RentalGrid>{rentalItems}</RentalGrid>
 	);
 }
 
+
+const RentalGrid = styled.div`
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 100dvw;
+	gap: 5px;
+`;
 
