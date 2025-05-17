@@ -1,4 +1,4 @@
-import type { Rental } from "../types/rental";
+import type { Rental } from "../models/rental";
 import api from "./axiosConfig";
 
 export async function getAllRentals() {
@@ -6,21 +6,38 @@ export async function getAllRentals() {
 		const response = await api.get("/locacoes?view=Grid%20view");
 		return response.data.records;
 	} catch (error) {
-        console.error(error);
+		console.error(error);
 	}
 }
 
-export async function getRentalById(id: number) {
+export async function getRentalById(id: string) {
 	const response = await api.get(`/locacoes/${id}`);
+	delete response.data.fields.id; 
+	delete response.data.fields.usuario_atualizacao;
+	delete response.data.fields.usuario_criacao;
 	return response.data;
 }
 
-export async function createRental(rental: Partial<Rental>) {
-	const response = await api.post("/locacoes", rental);
-	return response.data;
+export async function createRental(rental: Partial<Rental['fields']>) {
+	console.log({ "records": [{ "fields": rental }] });
+
+	const response = await api.post("/locacoes", { "records": [{ "fields": rental }] });
+	return response.data.records;
 }
 
-export async function updateRental(rental: Partial<Rental>) {
-	const response = await api.patch(`/locacoes`, rental);
+export async function updateRental(id: string, rental: Partial<Rental['fields']>) {
+
+	const data = {
+		"records": [
+			{
+				"id": id,
+				"fields": rental
+			}
+		]
+	}
+
+	console.log(data); 
+
+	const response = await api.patch(`/locacoes`, data);
 	return response.data;
 }

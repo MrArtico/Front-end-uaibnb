@@ -13,13 +13,6 @@
   --card-border-radius: 15px;
   --card-background: #fff;
   --card-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-  --card-content-color: rgba(0, 0, 0, 0.5);
-}
-
-.card {
-	padding: 2em;
-}
-
-.read-the-docs {
-	color: #888;
+  --card-content-color: rgba(0, 0, 0, 0.651);
+  color: white;
 }

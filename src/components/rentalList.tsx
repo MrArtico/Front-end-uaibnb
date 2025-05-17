@@ -1,7 +1,7 @@
-import React, { useEffect, useState, type JSX } from 'react';
+import { useEffect, useState, type JSX } from 'react';
 import { getAllRentals } from '../services/rentalService';
 import { RentalItem } from './rentaltem';
-import type { Rental } from '../types/rental';
+import type { Rental } from '../models/rental';
 import styled from 'styled-components';
 
 export default function RentalList() {
@@ -44,10 +44,11 @@ export default function RentalList() {
 
 
 const RentalGrid = styled.div`
-	display: flex;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	gap: 10px;
 	flex-wrap: wrap;
 	justify-content: center;
-	width: 100dvw;
+	width: clamp(300px, 80vw, 1200px);
 	gap: 5px;
 `;
-

@@ -9,5 +9,5 @@ function Characteristics() {
 	);
 }
 
-export default Characteristics ;
+export default Characteristics;
 
