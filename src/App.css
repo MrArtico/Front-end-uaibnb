@@ -1,0 +1,19 @@
+#root {
+  width: 100dvw;
+	max-width: 100dvw;
+	margin: 0 0;
+	padding: 0;
+	
+	box-sizing: border-box;
+}
+
+
+:root{ 
+  --card-width: 200px;
+  --card-height: 300px;
+  --card-border-radius: 15px;
+  --card-background: #fff;
+  --card-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  --card-content-color: rgba(0, 0, 0, 0.651);
+  color: white;
+}
