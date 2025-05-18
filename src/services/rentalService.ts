@@ -1,4 +1,4 @@
-import type { Rental } from "../models/rental";
+import type { RentalUpdate } from "../models/rental";
 import api from "./axiosConfig";
 
 export async function getAllRentals() {
@@ -18,25 +18,29 @@ export async function getRentalById(id: string) {
 	return response.data;
 }
 
-export async function createRental(rental: Partial<Rental['fields']>) {
-	console.log({ "records": [{ "fields": rental }] });
-
-	const response = await api.post("/locacoes", { "records": [{ "fields": rental }] });
+export async function createRental(rental: RentalUpdate) {
+	const data = { "records": [{fields: rental.fields}] };
+	
+	const response = await api.post("/locacoes", data);
 	return response.data.records;
 }
 
-export async function updateRental(id: string, rental: Partial<Rental['fields']>) {
-
+export async function updateRental(rental: RentalUpdate) {
 	const data = {
 		"records": [
 			{
-				"id": id,
-				"fields": rental
+				id: rental.id,
+				fields: {
+					titulo: rental.fields.titulo,
+					descricao: rental.fields.descricao,
+					preco: rental.fields.preco,
+					cidade: rental.fields.cidade,
+					locacao_caracteristicas: rental.fields.locacao_caracteristicas,
+					imagem: rental.fields.imagem,
+				}
 			}
 		]
 	}
-
-	console.log(data); 
 
 	const response = await api.patch(`/locacoes`, data);
 	return response.data;

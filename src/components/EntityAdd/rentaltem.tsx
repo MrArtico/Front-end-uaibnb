@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import type { Rental } from "../models/rental";
+import type { Rental } from "../../models/rental";
 import { GoGear } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
 
-export function RentalItem({ rental }: { rental: Rental }) {
+export function RentalItem({ rental, handleEditRental }: { rental: Rental,  handleEditRental: (id: string) => void}) {
   const { titulo, preco, cidade, imagem } = rental.fields;
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ export function RentalItem({ rental }: { rental: Rental }) {
         <RentalOptions
           onClick={(e) => {
             e.stopPropagation();
-            navigate(`/rental/edit/${rental.id}`);
+            handleEditRental(rental.id)
           }}
         >
           <GoGear size={20} />
@@ -72,7 +72,7 @@ const RentalOptions = styled.div`
 
 const RentalContainer = styled.div`
   position: relative;
-  width: var(--card-width); // Qq coisa muda o tamanho dos cards no css
+  width: var(--card-width);
   height: var(--card-height); 
   border-radius: 30px;
   overflow: hidden;
@@ -92,13 +92,16 @@ const Image = styled.img`
   height: 100%;
   object-fit: cover;
   display: block;
-  object-position: 65%;
+  object-position: 65% 0%;
   border-radius: var(--card-border-radius);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, object-position 3s ease;
+  
   ${RentalContainer}:hover & {
-    transform: scale(1.05);
+    transform: scale(1.10);
+    object-position: 100% 65%;
   }
 `;
+
 
 const RentalTitle = styled.p`
   font-size: 1rem;

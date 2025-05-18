@@ -1,11 +1,11 @@
 import { useEffect, useState, type JSX } from 'react';
-import { getAllRentals } from '../services/rentalService';
-import { RentalItem } from './rentaltem';
-import type { Rental } from '../models/rental';
+import { getAllRentals } from '../../services/rentalService';
+import { RentalItem } from '../EntityAdd/rentaltem';
+import type { Rental } from '../../models/rental';
 import styled from 'styled-components';
 
-export default function RentalList() {
-	const [rentals, setRentals] = useState<Rental[]>([]);
+export default function RentalList({ handleEditRental, rentals, setRentals }: { handleEditRental: (id: string) => void, rentals: Rental[], setRentals: (rentals: Rental[]) => void }) {
+
 	const [rentalItems, setRentalItems] = useState<JSX.Element[]>([]);
 	const [error, setError] = useState<string | null>(null);
 
@@ -20,19 +20,20 @@ export default function RentalList() {
 			}
 		}
 		fetchRentals();
-	}, []);
+	}, [setRentals]);
 
 	useEffect(() => {
 		if (rentals.length === 0) return;
 
 		try {
-			const newRental = rentals.map((rental: Rental) => (<RentalItem key={rental.id} rental={rental} />));
+			const newRental = rentals.map((rental: Rental) => (<RentalItem key={rental.id} rental={rental} handleEditRental={handleEditRental} />));
+
 			setRentalItems(newRental);
 		} catch (error) {
 			console.error('Erro ao formatar a lista de alugueis:', error);
 			setError('Erro ao formatar a lista de alugueis');
 		}
-	}, [rentals]);
+	}, [rentals, handleEditRental]);
 
 	if (error) return <p>{error}</p>
 	if (rentals.length === 0) return <p>Loading...</p>;
@@ -42,13 +43,12 @@ export default function RentalList() {
 	);
 }
 
-
 const RentalGrid = styled.div`
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-	gap: 10px;
+	margin-top: 10px;
+	grid-template-columns: repeat(auto-fill, minmax(var(--card-width), 1fr));
+	gap:5px;
 	flex-wrap: wrap;
-	justify-content: center;
-	width: clamp(300px, 80vw, 1200px);
-	gap: 5px;
+	padding: 0px 30px;
+	width: clamp(100px, 100%, 100%);
 `;
