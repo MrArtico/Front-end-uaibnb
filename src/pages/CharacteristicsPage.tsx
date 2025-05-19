@@ -44,9 +44,9 @@ export default function CharacteristicsPage() {
 			<ActionsContainer>
 				<AddButton text="Adicionar Característica" onClick={()=>handleAddCharacteristic()} />
 				</ActionsContainer>
-			<CharacteristicsContainer>
-				<CharacteristicList handleEditCharacteristic={handleEditCharacteristics} characteristics={characteristics} setCharacteristics={setCharacteristics} />
-			</CharacteristicsContainer>
+				<CharacteristicsContainer>
+					<CharacteristicList handleEditCharacteristic={handleEditCharacteristics} characteristics={characteristics} setCharacteristics={setCharacteristics} />
+				</CharacteristicsContainer>
 			{addCharacteristic && <CharacteristicForm onClick={() =>handleAddCharacteristic()} setCharacteristics={setCharacteristics} />}
 			{editCharacteristic.edit && (
 				<CharacteristicEdit id={editCharacteristic.id} handleEditCharacteristic={handleEditCharacteristics} setCharacteristics={setCharacteristics} />
@@ -57,30 +57,22 @@ export default function CharacteristicsPage() {
 }
 
 const PageContainer = styled.div`
-	position: relative;
-	display: block;
+	display: flex;
 	width: 100%;
 	min-height: 100dvh;
-	max-width: 100dvw;
+	flex-direction: column;
 	overflow-x: hidden;
-	background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+	background: linear-gradient(105deg, var(--primary-color), var(--secondary-color));
 `;
 
 const CharacteristicsContainer = styled.div`
-	width: 100%;
-	box-sizing: border-box;
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	padding: 30px;
 `;
-
 
 const ActionsContainer = styled.div`
 	width: 100%;
 	box-sizing: border-box;
 	display: flex;
 	justify-content: center;
-	align-items: center;
 	margin: 10px auto;
 `;

@@ -38,7 +38,7 @@ export default function RentalList({ handleEditRental, rentals, setRentals }: { 
 	}, [rentals, handleEditRental]);
 
 	if (error) return <p>{error}</p>
-	if (rentals.length === 0) return <p>Loading...</p>;
+	if (rentals.length === 0) return;
 
 	return (
 		<RentalGrid>{rentalItems}</RentalGrid>

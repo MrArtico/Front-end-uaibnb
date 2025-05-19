@@ -2,8 +2,8 @@ import { useEffect, useState, type JSX } from "react";
 import type { CharacteristicsItem } from "../../models/characteristics";
 import { getAllCharacteristics } from "../../services/characteristicsService";
 import { CharacteristicItem } from "../EntityAdd/characteristicItem";
-import styled from "styled-components";
 import ErrorAlert from "../Alerts/ErrorAlert";
+import styled from "styled-components";
 
 export default function CharacteristicList({
 	handleEditCharacteristic, characteristics, setCharacteristics
@@ -45,15 +45,9 @@ export default function CharacteristicList({
 	</>)
 }
 
-
 const CharacteristicsContainer = styled.div`
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(calc(var(--card-width) + 2%), 1fr));
-
-	flex-wrap: wrap;
-	justify-content: center;
 	width: 100%;
-	padding: 10px;
-
-	gap: 5px;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	grid-gap: 10px;
 `;

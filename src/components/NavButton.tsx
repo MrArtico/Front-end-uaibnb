@@ -19,4 +19,5 @@ const ActionButton = styled.button`
 	background-color: var(--secondary-color);
 	border-radius: 5px;
 	border: none;
+	min-width: 200px;
 `;

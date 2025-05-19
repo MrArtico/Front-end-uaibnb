@@ -64,7 +64,8 @@ const PageContainer = styled.div`
 	min-height: 100dvh;
 	max-width: 100%;
 	overflow-x: hidden;
-	background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+	background: #2A7B9B;
+	background: linear-gradient(105deg, rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%);
 `;
 
 

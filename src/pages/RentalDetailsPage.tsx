@@ -23,8 +23,8 @@ export default function RentalDetails() {
 			try {
 				setLoading(true);
 				const data = await getRentalById(id);
-					setRental(data);
-					setError(null);
+				setRental(data);
+				setError(null);
 			} catch (err) {
 				console.error(err);
 				setError("Erro ao carregar dados da locação.");
@@ -36,57 +36,59 @@ export default function RentalDetails() {
 		fetchRental();
 
 	}, [id, navigate]);
-	
+
 
 	return (
 
-		<RentalContainer>
-
-			<ButtonBack onClick={() => navigate("/")}>Voltar</ButtonBack>
-
-			{loading && <LoadingMessage>Carregando...</LoadingMessage>}
-			{error && <ErrorMessage>{error}</ErrorMessage>}
-
+		<RentalPage>
 			{!loading && !error && rental && (
 				<RentalContent>
+
 					<InfoCard>
-						<h1>{rental.fields.titulo}</h1>
+						<ButtonBack onClick={() => navigate("/")}>Voltar</ButtonBack>
 
-						<Section>
-							<Title>Descrição</Title>
-							<p>{rental.fields.descricao}</p>
-						</Section>
+						<DetailsArea>
+							<h1>{rental.fields.titulo}</h1>
 
-						<Section>
-							<Title>Preço</Title>
-							<p>R$ {rental.fields.preco.toFixed(2)}</p>
-						</Section>
-
-						<Section>
-							<Title>Cidade</Title>
-							<p>{rental.fields.cidade}</p>
-						</Section>
-
-						{rental.fields.nome_caracteristica?.length > 0 && (
 							<Section>
-								<Title>Características</Title>
-								<CaracteristicasList>
-									{rental.fields.nome_caracteristica.map((caracteristica, index) => (
-										<CaracteristicElement color={textToColor(caracteristica)} key={index}>{caracteristica}</CaracteristicElement>
-									))}
-								</CaracteristicasList>
+								<Title>Descrição</Title>
+								<p>{rental.fields.descricao}</p>
 							</Section>
-						)}
+
+							<Section>
+								<Title>Preço</Title>
+								<p>R$ {rental.fields.preco.toFixed(2)}</p>
+							</Section>
+
+							<Section>
+								<Title>Cidade</Title>
+								<p>{rental.fields.cidade}</p>
+							</Section>
+
+							{rental.fields.nome_caracteristica?.length > 0 && (
+								<Section>
+									<Title>Características</Title>
+									<CaracteristicasList>
+										{rental.fields.nome_caracteristica.map((caracteristica, index) => (
+											<CaracteristicElement color={textToColor(caracteristica)} key={index}>{caracteristica}</CaracteristicElement>
+										))}
+									</CaracteristicasList>
+								</Section>
+							)}
+						</DetailsArea>
+						<div>
+							{rental.fields.imagem && (
+								<ImageSection>
+									<Image src={rental.fields.imagem} alt={rental.fields.titulo} />
+								</ImageSection>
+							)}
+						</div>
 					</InfoCard>
 
-					{rental.fields.imagem && (
-						<ImageSection>
-							<Image src={rental.fields.imagem} alt={rental.fields.titulo} />
-						</ImageSection>
-					)}
+
 				</RentalContent>
 			)}
-		</RentalContainer>
+		</RentalPage>
 	);
 }
 
@@ -99,13 +101,13 @@ const Title = styled.h2`
 	margin: 0;
 `;
 
-const RentalContainer = styled.section`
+const RentalPage = styled.section`
 	font-size: 60px;
-	display: flex;
-	flex-direction: column;
-	padding: 2rem clamp(1rem, 5vw, 3rem);
-	min-height: 100vh;
-	width: 100%;
+	max-width: 100dvw;
+	overflow: hidden;
+	min-height: 100dvh;
+	max-height: 100dvh;
+	width: 100dvw;
 	background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
 	color: #ffffff;
 	box-sizing: border-box;
@@ -113,19 +115,18 @@ const RentalContainer = styled.section`
 `;
 
 const ButtonBack = styled.button`
-	align-self: flex-start;
-	background: transparent;
-	color: #ffffff;
-	border: 2px solid #ffffff;
+	position: absolute;
+	border: solid 1px var(--primary-color);
+	color: var(--primary-color);
+	background-color: white;
 	padding: 0.6rem 1.2rem;
 	border-radius: 8px;
 	cursor: pointer;
 	font-size: 1rem;
 	font-weight: 600;
 	transition: all 0.3s ease-in-out;
-	display: inline-flex;
-	align-items: center;
-	gap: 0.5rem;
+	display: flex;
+	height: min-content;
 
 	&:hover {
 		background-color: #ffffff;
@@ -136,28 +137,27 @@ const ButtonBack = styled.button`
 
 const RentalContent = styled.div`
 	display: flex;
-	flex-direction: row;
-	flex-grow: 1;
-	width: 100%;
-	gap: 2rem;
+	flex-direction: column;
+	min-width: 100%;
+	min-height: 100%;
 
-	@media (max-width: 900px) { 
-		flex-direction: column;
-		gap: 1.5rem;
-	}
+	
+	justify-content: center;
+	align-items: center;
+
 `;
 
 const InfoCard = styled.div`
-	background: #ffffff;
 	color: var(--primary-color);
+	background-color: white;
+	padding: 10px;
 	border-radius: 16px;
-	box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-	padding: 2rem clamp(1rem, 3vw, 2rem);
-	flex: 1;
 	display: flex;
-	flex-direction: column;
-	margin-top: 5px;
-
+	flex-direction: row;
+	width: 70%;
+	max-height: 50%;
+	justify-content: space-between;
+	gap: 10px;
 	h1 {
 		font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
 		color: var(--primary-color);
@@ -191,7 +191,7 @@ const CaracteristicasList = styled.ul`
 `;
 
 const CaracteristicElement = styled.li`
-	background: ${({color})=> color};
+	background: ${({ color }) => color};
 	color: #ffffff;
 	padding: 0.4rem 1rem;
 	border-radius: 20px;
@@ -203,22 +203,16 @@ const CaracteristicElement = styled.li`
 `
 
 const ImageSection = styled.div`
-	flex: 1.1;
 	border-radius: 16px;
 	overflow: hidden;
 	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 	display: flex;
+	width: 100%;
+	max-width: 650px;
 	justify-content: center;
 	align-items: center;
 	background-color: #eeeeee;
-	aspect-ratio: 16 / 9;
 	position: relative;
-
-	@media (max-width: 768px) {
-		width: 100%;
-		height: 300px;
-		aspect-ratio: unset;
-	}
 `;
 
 const Image = styled.img`
@@ -235,16 +229,7 @@ const Image = styled.img`
 	}
 `;
 
-const LoadingMessage = styled.h2`
-	font-size: 1.2rem;
-	margin-top: 2rem;
-	color: #ffffff;
-	text-align: center;
+const DetailsArea = styled.div`
+	margin: 25px;
 `;
 
-const ErrorMessage = styled.h2`
-	font-size: 1.2rem;
-	margin-top: 2rem;
-	color: #ff8a80;
-	text-align: center;
-`;

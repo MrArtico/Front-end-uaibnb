@@ -41,8 +41,7 @@ const Card = styled.div`
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 	padding: 1rem;
 	transition: transform 0.2s;
-	width: 100%;
-	max-width: 300px;
+	width: 280px;
 	margin: 0 auto;
 	color: black;
 

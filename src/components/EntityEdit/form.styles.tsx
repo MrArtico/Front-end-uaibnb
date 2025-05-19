@@ -80,7 +80,7 @@ export const FormTextArea = styled.textarea`
 
 export const FormSubmitButton = styled.button`
   padding: 0.75rem;
-  background-color: var(--secondary-color);
+  background-color: var(--primary-color);
   color: white;
   font-weight: bold;
   border: none;

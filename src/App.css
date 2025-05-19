@@ -17,6 +17,12 @@
   --card-content-color: rgba(0, 0, 0, 0.651);
   color: white;
 
-  --primary-color: #4CAF50;
-  --secondary-color: #2e7d32;
+  /* --primary-color: #6fca72;
+  --secondary-color: #225024; */
+
+   /* rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50% */
+
+   --primary-color: rgba(42, 123, 155, 1);
+    --secondary-color: rgba(87, 199, 133, 1);
+   
 }
