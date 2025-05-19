@@ -1,41 +1,90 @@
-import RentalList from "../components/rentalList";
 import { styled } from "styled-components";
-import { useState } from "react";
-import RentalForm from "../components/rentalForm";
-import RentalAddButton from "../components/rentalAddButton";
+import { useEffect, useState } from "react";
+import RentalForm from "../components/EntityAdd/rentalForm";
+import RentalList from "../components/EntityList/rentalList";
+import type { Rental } from "../models/rental";
 
+import NavigationHeader from "../components/Header";
+import AddButton from "../components/AddButton";
+import FormEdit from "../components/EntityEdit/FormEdit";
 
+function RentalPage() {
+	const [rentals, setRentals] = useState<Rental[]>([]);
+	const [addRental, setAddRental] = useState(false);
+	const [editRental, setEditRental] = useState({
+		id: "0",
+		edit: false,
+	});
+	const handleAddRental = () => {
+		setAddRental(!addRental);
+	};
 
-function Rental() {
-  const [addRental, setAddRental] = useState(false);
+	const handleEditRental = (id: string) => {
+		setEditRental((prev) => {
+			return { id, edit: !prev.edit };
+		});
+	};
 
-  const handleAddRental = () => {
-    setAddRental(!addRental);
-  };
+	useEffect(() => {
+		if (editRental.edit || addRental) {
+			document.body.style.overflow = "hidden";
+		} else {
+			document.body.style.overflow = "auto";
+		}
 
-  return (
-    <PrimeDiv>
-      <RentalAddButton
-        textButton="Adicionar Locação"
-        onClick={handleAddRental}
-      />
-      <RentalAddButton
-        textButton="Adicionar Caracteristicas"
-        onClick={handleAddRental}
-      />
-      <RentalList />
+		return () => {
+			document.body.style.overflow = "auto";
+		};
+	}, [editRental.edit, addRental]);
 
-      {addRental && <RentalForm onClick={handleAddRental} />}
-    </PrimeDiv>
-  );
+	return (
+		<PageContainer>
+			<NavigationHeader />
+			<ActionsContainer>
+			<AddButton text="Adicionar Locação" onClick={()=>handleAddRental()} />
+			</ActionsContainer>
+			<RentalContainer>
+				<RentalList handleEditRental={handleEditRental} rentals={rentals} setRentals={setRentals} />
+			</RentalContainer>
+			{addRental && <RentalForm onClick={handleAddRental} setRentals={setRentals} />}
+			{editRental.edit && (
+				<FormEdit id={editRental.id} handleEditRental={handleEditRental} setRentals={setRentals} />
+			)}
+		</PageContainer>
+	);
 }
 
-export default Rental;
+export default RentalPage;
 
-const PrimeDiv = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  width: 100dvw;
-  gap: 30px;
+
+
+const PageContainer = styled.div`
+	display: block;
+	width: 100%;
+	min-height: 100dvh;
+	max-width: 100%;
+	overflow-x: hidden;
+	background: #2A7B9B;
+	background: linear-gradient(105deg, rgba(42, 123, 155, 1) 0%, rgba(87, 199, 133, 1) 50%);
+`;
+
+
+
+const RentalContainer = styled.div`
+	width: 100%;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
+	margin-bottom: 10px;
+`;
+
+const ActionsContainer = styled.div`
+	width: 100%;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 10px auto;
 `;

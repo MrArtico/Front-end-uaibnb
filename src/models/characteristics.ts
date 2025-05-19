@@ -13,3 +13,10 @@ export interface CharacteristicsItem {
 		nome_caracteristica: string[];
 	};
 }
+
+export type CharacteristicsUpdate = {
+  records: {
+    id: string;
+    fields: Omit<Pick<CharacteristicsItem, 'fields'>['fields'], 'nome_caracteristica'  | 'id' |  'usuario_criacao' | 'usuario_atualizacao'>;
+  }[];
+};

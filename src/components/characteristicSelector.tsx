@@ -5,25 +5,31 @@ import textToColor from "../utils/textToColor";
 const CharacteristicSelector = ({
   caracteristicas,
   handleCheckboxChange,
+  checkedCaracteristicas,
 }: {
   caracteristicas: CharacteristicsItem[];
   handleCheckboxChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  checkedCaracteristicas: string[];
 }) => {
   return (
     <PageLetras>
       {caracteristicas.map((caracteristica: CharacteristicsItem) => {
-        const id = `caracteristica-${caracteristica.id}`;
+        const realID = caracteristica.fields?.locacao_caracteristicas?.[0] || caracteristica.id
+        const id = `caracteristica-${realID}`;
+
+
         return (
           <StyledItem
-            key={caracteristica.id}
+            key={realID}
             color={textToColor(caracteristica.fields.nome)}
           >
             <input
               id={id}
               type="checkbox"
               name="locacao_caracteristicas"
-              value={caracteristica.id}
+              value={realID}
               onChange={handleCheckboxChange}
+              checked={checkedCaracteristicas?.includes(realID)}
             />
             <label htmlFor={id}>{caracteristica.fields.nome}</label>
           </StyledItem>
@@ -57,12 +63,12 @@ const PageLetras = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #4caf50;
+    background: var(--secondary-color);                               
     border-radius: 0px 15px 15px 0px;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: #2e7d32;
+    background: var(--primary-color);
   }
 `;
 
