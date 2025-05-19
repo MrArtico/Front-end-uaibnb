@@ -77,13 +77,12 @@ export default function RentalDetails() {
 								</Section>
 							)}
 						</DetailsArea>
-						<div>
+
 							{rental.fields.imagem && (
 								<ImageSection>
 									<Image src={rental.fields.imagem} alt={rental.fields.titulo} />
 								</ImageSection>
 							)}
-						</div>
 					</InfoCard>
 
 
@@ -105,7 +104,7 @@ const Title = styled.h2`
 const RentalPage = styled.section`
 	font-size: 60px;
 	max-width: 100%;
-	
+
 	overflow: hidden;
 	min-height: 100dvh;
 	overflow-x: hidden;
@@ -146,26 +145,27 @@ const RentalContent = styled.div`
 `;
 
 const InfoCard = styled.div`
-  background-color: white;
-  padding: 2rem;
-  border-radius: 1.5rem;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  max-width: 80%;
-  width: 90%;
-  gap: 2rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+	background-color: white;
+	padding: 2rem;
+	border-radius: 1.5rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	max-width: 80%;
+	width: 90%;
+	gap: 2rem;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 
-  h1 {
-    font-size: clamp(1.5rem, 2.5vw, 2rem);
-    color: var(--primary-color);
-  }
+	h1 {
+		font-size: clamp(1.5rem, 2.5vw, 2rem);
+		color: var(--primary-color);
+	}
 
-  @media (max-width: 768px) {
-    flex-direction: column;
-    padding: 1.5rem;
-  }
+	@media (max-width: 768px) {
+		flex-direction: column;
+		padding: 1.5rem;
+	}
 `;
 
 
@@ -212,10 +212,12 @@ const ImageSection = styled.div`
 	overflow: hidden;
 	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 	display: flex;
-
+	min-width: 100%;
 	max-width: 100%;
+	flex: 1;
+	aspect-ratio: 16 / 9;
 	height: 100%;
-	justify-content: right;
+	justify-content: center;
 	align-items: center;
 `;
 
@@ -226,10 +228,16 @@ const Image = styled.img`
 	border-radius: inherit;
 	transition: transform 0.4s ease, filter 0.3s ease;
 
+	transition: transform 0.3s ease, object-position 3s ease;
+
+
 	${ImageSection}:hover & {
 		transform: scale(1.03);
 		filter: brightness(0.9);
 		cursor: pointer;
+
+			transform: scale(1.10);
+			object-position: 100% 65%;
 	}
 `;
 
