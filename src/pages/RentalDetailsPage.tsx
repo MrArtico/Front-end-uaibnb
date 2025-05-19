@@ -38,6 +38,7 @@ export default function RentalDetails() {
 	}, [id, navigate]);
 
 
+
 	return (
 
 		<RentalPage>
@@ -103,11 +104,11 @@ const Title = styled.h2`
 
 const RentalPage = styled.section`
 	font-size: 60px;
-	max-width: 100dvw;
+	max-width: 100%;
+	
 	overflow: hidden;
 	min-height: 100dvh;
-	max-height: 100dvh;
-	width: 100dvw;
+	overflow-x: hidden;
 	background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
 	color: #ffffff;
 	box-sizing: border-box;
@@ -138,31 +139,35 @@ const ButtonBack = styled.button`
 const RentalContent = styled.div`
 	display: flex;
 	flex-direction: column;
-	min-width: 100%;
-	min-height: 100%;
-
-	
 	justify-content: center;
 	align-items: center;
-
+	min-height: 100dvh;
+	padding: 2rem;
 `;
 
 const InfoCard = styled.div`
-	color: var(--primary-color);
-	background-color: white;
-	padding: 10px;
-	border-radius: 16px;
-	display: flex;
-	flex-direction: row;
-	width: 70%;
-	max-height: 50%;
-	justify-content: space-between;
-	gap: 10px;
-	h1 {
-		font-size: clamp(1.5rem, 2vw + 1rem, 2rem);
-		color: var(--primary-color);
-	}
+  background-color: white;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-width: 80%;
+  width: 90%;
+  gap: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+  h1 {
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    color: var(--primary-color);
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding: 1.5rem;
+  }
 `;
+
 
 const Section = styled.section`
 	display: flex;
@@ -207,12 +212,11 @@ const ImageSection = styled.div`
 	overflow: hidden;
 	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 	display: flex;
-	width: 100%;
-	max-width: 650px;
-	justify-content: center;
+
+	max-width: 100%;
+	height: 100%;
+	justify-content: right;
 	align-items: center;
-	background-color: #eeeeee;
-	position: relative;
 `;
 
 const Image = styled.img`
@@ -231,5 +235,9 @@ const Image = styled.img`
 
 const DetailsArea = styled.div`
 	margin: 25px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 500px;
 `;
 
