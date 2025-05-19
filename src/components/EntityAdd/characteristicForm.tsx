@@ -2,7 +2,7 @@ import type { CharacteristicsItem } from "../../models/characteristics";
 import { useState } from "react";
 import { createCharacteristics, getAllCharacteristics } from "../../services/characteristicsService";
 import CloseButton from "../CloseButton";
-import { FormContainer, FormGroup, FormInput, FormLabel, FormPageContainer, FormSubmitButton, FormWrapper } from "../EntityEdit/Form.styles";
+import { FormContainer, FormGroup, FormInput, FormLabel, FormPageContainer, FormSubmitButton, FormWrapper } from "../EntityEdit/form.styles";
 
 export default function CharacteristicForm({
 	onClick,

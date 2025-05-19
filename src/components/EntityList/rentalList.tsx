@@ -17,6 +17,7 @@ export default function RentalList({ handleEditRental, rentals, setRentals }: { 
 			} catch (error) {
 				console.error('Não foi possível buscar as locações:', error);
 				setError('Não foi possível buscar as locações');
+				setTimeout(()=>setError(null),3000);
 			}
 		}
 		fetchRentals();
@@ -32,6 +33,7 @@ export default function RentalList({ handleEditRental, rentals, setRentals }: { 
 		} catch (error) {
 			console.error('Erro ao formatar a lista de alugueis:', error);
 			setError('Erro ao formatar a lista de alugueis');
+			setTimeout(()=>setError(null),3000);
 		}
 	}, [rentals, handleEditRental]);
 

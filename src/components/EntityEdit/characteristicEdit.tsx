@@ -16,7 +16,8 @@ import {
 	FormSubmitButton,
 	FormTextArea,
 	FormWrapper,
-} from "./Form.styles";
+} from "./form.styles";
+import WarningAlert from "../Alerts/WarningAlert";
 
 export default function CharacteristicEdit({
 	id,
@@ -36,6 +37,7 @@ export default function CharacteristicEdit({
 	});
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
+	const [alert, setAlert] = useState<string | null>(null);
 
 	useEffect(() => {
 		if (!id) return;
@@ -47,6 +49,7 @@ export default function CharacteristicEdit({
 				setFormData(response ?? { nome: "", descricao: "" });
 			} catch (error) {
 				setError("Erro ao buscar caracter stica.");
+				setTimeout(() => setError(null), 3000);
 				console.error(error);
 			} finally {
 				setLoading(false);
@@ -76,7 +79,7 @@ export default function CharacteristicEdit({
 		if (formData === undefined) return;
 
 		if (!formData.nome || !formData.descricao) {
-			setError("Preencha todos os campos.");
+			setAlert("Preencha todos os campos.");
 			setTimeout(() => setError(null), 3000);
 			return;
 		}
@@ -133,6 +136,7 @@ export default function CharacteristicEdit({
 					</FormSubmitButton>
 				</FormWrapper>
 					{error && <ErrorAlert errorMessage={error} />}
+					{alert && <WarningAlert errorMessage={alert}/>}
 			</FormContainer>
 		</FormPageContainer>
 	);

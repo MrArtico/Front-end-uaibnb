@@ -5,11 +5,10 @@ import CharacteristicSelector from "../characteristicSelector";
 import { getAllCharacteristics } from "../../services/characteristicsService";
 import { type Rental, type RentalUpdate } from "../../models/rental";
 import { getAllRentals, getRentalById, updateRental } from "../../services/rentalService";
-
-
 import CloseButton from "../CloseButton";
-// import { PageContainer } from "./characteristicEdit";
-import { FormTextArea, FormSubmitButton, FormPageContainer,FormContainer, FormInput, FormLabel, FormWrapper, FormGroup } from "./Form.styles";
+import ErrorAlert from "../Alerts/ErrorAlert";
+import WarningAlert from "../Alerts/WarningAlert";
+import { FormContainer, FormGroup, FormInput, FormLabel, FormPageContainer, FormSubmitButton, FormTextArea, FormWrapper } from "./form.styles";
 
 interface FormEditProps {
 	id: string;
@@ -24,9 +23,10 @@ export default function FormEdit({
 }: FormEditProps) {
 	const navigate = useNavigate();
 
-	const [caracteristicas, setCaracteristicas] = useState<CharacteristicsItem[]>(
-		[]
-	);
+	const [caracteristicas, setCaracteristicas] = useState<CharacteristicsItem[]>([]);
+	const [error, setError] = useState<string | null>(null);
+	const [alert, setAlert] = useState<string | null>(null);
+
 	const [formData, setFormData] = useState<RentalUpdate>({
 		id: "",
 		fields: {
@@ -49,7 +49,8 @@ export default function FormEdit({
 				setFormData(response as RentalUpdate);
 			} catch (error) {
 				console.error("Erro ao buscar caracteristicas:", error);
-				navigate("/");
+				setError("Erro ao buscar caracteristicas:");
+				setTimeout(()=> setError(null),3000);
 				return;
 			}
 		}
@@ -63,6 +64,8 @@ export default function FormEdit({
 				setCaracteristicas(response);
 			} catch (error) {
 				console.error("Erro ao buscar caracteristicas:", error);
+				setError("Erro ao buscar caracteristicas:");
+				setTimeout(()=> setError(null),3000);
 			}
 		}
 		fetchCaracteristicas();
@@ -90,27 +93,40 @@ export default function FormEdit({
 			formData.fields.preco === 0 ||
 			formData.fields.cidade === ""
 		) {
-			alert("Preencha todos os campos");
+			setAlert("Preencha todos os campos");
+			setTimeout(()=> setAlert(null),3000);
 			return;
 		}
 
 		if (formData.fields.imagem === "") {
-			alert("Selecione uma imagem");
+			setAlert("Selecione uma imagem");
+			setTimeout(()=> setAlert(null),3000);
 			return;
 		}
-		formData.fields.preco = Number(formData.fields.preco);
-		await updateRental(formData as RentalUpdate);
+		try {
+			formData.fields.preco = Number(formData.fields.preco);
+			await updateRental(formData as RentalUpdate);
 
-		const updated = await getAllRentals();
-		setRentals(updated);
+			const updated = await getAllRentals();
+			setRentals(updated);
 
-		handleEditRental(id);
+			handleEditRental(id);
+		} catch(error: any) {
+			console.error(error);
+			setError("Não foi possível salvar os dados. Verifique as informações e tente novamente.");
+			setTimeout(()=> setError(null), 3000);
+		}
 		return;
 	};
 
 	const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { checked, value } = e.target;
 		setFormData((prevState: RentalUpdate) => {
+
+			if(!prevState.fields.locacao_caracteristicas) {
+				prevState.fields.locacao_caracteristicas = [];
+			}
+
 			const updatedCaracteristicas = checked
 				? [...(prevState.fields.locacao_caracteristicas as string[]), value]
 				: (prevState.fields.locacao_caracteristicas as string[]).filter(
@@ -191,6 +207,9 @@ export default function FormEdit({
 
 					<FormSubmitButton type="submit">Salvar</FormSubmitButton>
 				</FormWrapper>
+
+				{error && <ErrorAlert errorMessage={error}/>}
+				{alert && <WarningAlert errorMessage={alert}/>}
 			</FormContainer>
 		</FormPageContainer>
 	);

@@ -3,14 +3,11 @@ import { getAllCharacteristics } from "../../services/characteristicsService";
 import type { CharacteristicsItem } from "../../models/characteristics";
 import CharacteristicSelector from "../characteristicSelector";
 import { createRental, getAllRentals } from "../../services/rentalService";
-import styled from "styled-components";
-
-import { RiCloseLargeFill } from "react-icons/ri";
 import type { Rental, RentalUpdate } from "../../models/rental";
 import ErrorAlert from "../Alerts/ErrorAlert";
 import WarningAlert from "../Alerts/WarningAlert";
-import { FormContainer, FormInput, FormLabel, FormPageContainer, FormSubmitButton, FormTextArea, FormWrapper } from "../EntityEdit/Form.styles";
 import CloseButton from "../CloseButton";
+import { FormPageContainer, FormContainer, FormWrapper, FormLabel, FormInput, FormTextArea, FormSubmitButton } from "../EntityEdit/form.styles";
 
 export default function RentalForm({
 	onClick,
@@ -105,13 +102,19 @@ export default function RentalForm({
 		}
 		formData.fields.preco = Number(formData.fields.preco);
 
-		await createRental(
+		try {
+			await createRental(
 			formData as RentalUpdate
 		);
 		const updated = await getAllRentals();
 		setRentals(updated);
 
 		onClick();
+		}catch(error:any) {
+			console.error(error.message);
+			setError("Não foi possível salvar os dados. Verifique as informações e tente novamente.");
+			setTimeout(() => setAlert(null), 3000);
+		}
 		return;
 	};
 

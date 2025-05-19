@@ -1,13 +1,12 @@
 import { styled } from "styled-components";
 import { useEffect, useState } from "react";
 import RentalForm from "../components/EntityAdd/rentalForm";
-// import RentalAddButton from "../components/rentalAddButton";
-// import { useNavigate } from "react-router-dom";
 import RentalList from "../components/EntityList/rentalList";
 import type { Rental } from "../models/rental";
-import FormEdit from "../components/EntityEdit/FormEdit";
+
 import NavigationHeader from "../components/Header";
 import AddButton from "../components/AddButton";
+import FormEdit from "../components/EntityEdit/FormEdit";
 
 function RentalPage() {
 	const [rentals, setRentals] = useState<Rental[]>([]);
